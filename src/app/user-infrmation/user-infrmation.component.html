@@ -1,0 +1,130 @@
+<!-- <app-usertable></app-usertable> -->
+<div class="container">
+
+  <div class="filter-parent my-5">
+    <div class="filter-popup-parent bg-light ">
+      <div class="filter-bar one">
+
+        <form [formGroup]="userFilter" (ngSubmit)="onSubmit()">
+
+          <div formArrayName="conditions" >
+            <div *ngFor="let filter of filters().controls; let i=index" >
+              <div [formGroupName]="i" class="first-row my-3 d-flex">
+
+                <div class="mx-3" *ngIf="i == 0">
+                  <p class="filter-text">WHERE</p>
+                </div>
+              
+
+                <div *ngIf="i == 1" class="ms-2">
+                  <select class="filter-select"formControlName="logicalOperator" >
+                    <option *ngFor="let option of options" [ngValue]="option.value">{{ option.label }}</option>
+                  </select>
+                </div>
+
+                <div class="mx-4" *ngIf="i >= 2">
+                  <p class="filter-text">{{selectedOpt}}</p>
+                </div>
+
+                <div>
+                  <select class="filter-select " formControlName="id" (change)="onFilterOptionChange($event)">
+                    <option *ngFor="let option of filterOptions" [ngValue]="option.key">{{ option.prettyName }}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <select class="filter-select" formControlName="operator">
+                    <option *ngFor="let operator of getOperators()" [ngValue]="operator.key">{{ operator.prettyName }}
+                    </option>
+                  </select>
+                </div>
+
+                <div *ngIf="isVerified ">
+                  <select class="filter-select" formControlName="value" (keyup)="onSubmit()">
+                    <option value=true>YES</option>
+                    <option value=false>NO</option>
+                  </select>
+                </div>
+
+                <div *ngIf="!isVerified">
+                  <input type="text" class="filter-input" formControlName="value"  (keyup)="onSubmit()"placeholder="Value" />
+                </div>
+
+                <div class="icon-del" (click)="removeRow(i)">
+                  <i class="bi bi-trash text-secondary"></i>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+
+        <button class="filter-button" (click)="addFilter()"> <i class="bi bi-plus"></i>Add Filter</button>
+
+      </div>
+    </div>
+
+<!-- JSON VIEW -->
+
+    <div class="p-3 border rounded bg-light scroller margin-auto">
+      <h2>Json Value</h2>
+        <pre>
+      <p>{{this.userFilter.value | json}}</p>
+        </pre>
+    </div>
+  </div>
+</div>
+<!-- Table section -->
+
+
+  <section class="table-css container-fluid mat-elevation-z8" tabindex="0">
+    <!-- <div class="container"> -->
+  <table mat-table [dataSource]="filteringData" class="mat-elevation-z8 ">
+
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="screen_name">
+      <th mat-header-cell *matHeaderCellDef>ScreenName</th>
+      <td mat-cell *matCellDef="let element">{{ element.screen_name }}</td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="followers_count">
+      <th mat-header-cell *matHeaderCellDef>FollowersCount</th>
+      <td mat-cell *matCellDef="let element">{{ element.followers_count }}</td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="following_count">
+      <th mat-header-cell *matHeaderCellDef>FollowingCount</th>
+      <td mat-cell *matCellDef="let element">{{ element.following_count }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="location">
+      <th mat-header-cell *matHeaderCellDef>Location</th>
+      <td mat-cell *matCellDef="let element">{{ element.location }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="verified">
+      <th mat-header-cell *matHeaderCellDef>Verified</th>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.verified"><i class="bi bi-check text-success fs-3"></i></span>
+        <span *ngIf="!element.verified"><i class="bi bi-x text-danger fs-3"></i></span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+   <mat-paginator [length]="resultsLength" [pageSize]="30" aria-label="Select page of GitHub search results"></mat-paginator>
+<!-- </div> -->
+
+</section>

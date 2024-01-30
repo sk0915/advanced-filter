@@ -1,0 +1,75 @@
+table {
+  width: 100%;
+}
+.container,
+td,
+th {
+  font-family: "Poppins", sans-serif;
+}
+th {
+  font-size: 16px;
+  background: #dfdfdf !important;
+}
+.scroller {
+  max-width: 1000px;
+  height: 200px;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+}
+
+.filter-bar {
+  /* display: flex; */
+  align-items: center;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.filter-text {
+  margin-right: 5px;
+  font-weight: 500;
+}
+
+.filter-select {
+  margin: 0px 6px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.filter-input {
+  margin-right: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 175px;
+  background: #efefef;
+}
+
+.filter-button {
+  padding: 5px 10px;
+  background-color: #ffffff;
+  color: #898686;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 1px 1px 5px 1px #ececec;
+  cursor: pointer;
+}
+.icon-del {
+  border: 1px solid grey;
+  background-color: rgb(235 235 235);
+  border-radius: 4px;
+  font-size: 17px;
+  font-weight: 900;
+  height: 32px;
+  padding: 5px 8px;
+}
+.table-css {
+  height: 650px;
+  overflow: auto;
+}
+
+table {
+  width: 100% !important;
+}
